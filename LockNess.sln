@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockNess", "LockNess\LockNess.csproj", "{9C59F340-AEB5-487A-93C7-6F3E64124643}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LockNessServer", "LockNess\LockNessServer.csproj", "{9C59F340-AEB5-487A-93C7-6F3E64124643}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockSenderClient", "MockSenderClient\MockSenderClient.csproj", "{40EFFFA8-79DB-4410-9A6F-3EE312067F5C}"
 EndProject

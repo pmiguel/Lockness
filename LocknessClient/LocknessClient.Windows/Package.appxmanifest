@@ -1,38 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-
-  <Identity Name="0ea19bf5-e1f9-4db8-94cf-f9ec20f4ea6d"
-            Publisher="CN=Pedro"
-            Version="1.0.0.0" />
-
+  <Identity Name="0ea19bf5-e1f9-4db8-94cf-f9ec20f4ea6d" Publisher="CN=Pedro" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>LocknessClient.Windows</DisplayName>
-    <PublisherDisplayName>Pedro</PublisherDisplayName>
+    <DisplayName>Lockness Client</DisplayName>
+    <PublisherDisplayName>Pedro Leal</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Prerequisites>
     <OSMinVersion>6.3.0</OSMinVersion>
     <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
   </Prerequisites>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
-    <Application Id="App"
-        Executable="$targetnametoken$.exe"
-        EntryPoint="LocknessClient.Windows.App">
-        <m2:VisualElements
-            DisplayName="LocknessClient.Windows"
-            Square150x150Logo="Assets\Logo.png"
-            Square30x30Logo="Assets\SmallLogo.png"
-            Description="LocknessClient.Windows"
-            ForegroundText="light"
-            BackgroundColor="#464646">
-            <m2:SplashScreen Image="Assets\SplashScreen.png" />
-        </m2:VisualElements>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="LocknessClient.Windows.App">
+      <m2:VisualElements DisplayName="Lockness Client ALPHA" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="Lockness is a simple app that allows to lock a computer running Lockness Server remotely." ForegroundText="light" BackgroundColor="#464646">
+        <m2:SplashScreen Image="Assets\SplashScreen.png" />
+        <m2:InitialRotationPreference>
+          <m2:Rotation Preference="portrait" />
+          <m2:Rotation Preference="landscape" />
+          <m2:Rotation Preference="landscapeFlipped" />
+        </m2:InitialRotationPreference>
+      </m2:VisualElements>
     </Application>
   </Applications>
   <Capabilities>
