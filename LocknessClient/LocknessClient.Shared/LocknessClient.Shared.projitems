@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)NetworkInterfacecs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NetworkInterface.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)OldNetworkInterface.cs" />
   </ItemGroup>
 </Project>

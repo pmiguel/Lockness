@@ -7,13 +7,14 @@ using Windows.Storage.Streams;
 
 namespace LocknessClient
 {
-    public class NetworkInterface
+    public class OldNetworkInterface
     {
         private DatagramSocket _socket;
  
-        public NetworkInterface()
+        public OldNetworkInterface()
         {
             _socket = new DatagramSocket();
+            _socket.MessageReceived += _socket_MessageReceived;
         }
  
         public async void Connect(HostName remoteHostName, string remoteServiceNameOrPort)
@@ -32,5 +33,11 @@ namespace LocknessClient
             await writer.StoreAsync();
 
         }
+
+        void _socket_MessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

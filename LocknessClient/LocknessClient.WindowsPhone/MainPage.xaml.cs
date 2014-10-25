@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Networking;
 using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
+using Windows.ApplicationModel.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,13 +26,15 @@ namespace LocknessClient
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        NetworkInterface nic;
+        OldNetworkInterface nic;
+        DatagramSocket socket;
         public MainPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            nic = new NetworkInterface();
+            nic = new OldNetworkInterface();
+            socket =  new DatagramSocket();
         }
 
         /// <summary>
@@ -54,6 +58,26 @@ namespace LocknessClient
             HostName host = new HostName(this.HostBox.Text);
             nic.Connect(host, this.PortBox.Text);
             nic.SendMessage("lock");
+        }
+
+        private async void btnDiscover_Click(object sender, RoutedEventArgs e)
+        {
+            HostName host = new HostName(this.HostBox.Text);
+            //await socket.ConnectAsync(host, this.PortBox.Text);
+            socket.MessageReceived += socket_MessageReceived;
+            await socket.BindServiceNameAsync("7135");
+            socket.JoinMulticastGroup(host);            
+        }
+
+        async void socket_MessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
+        {
+            DataReader reader = args.GetDataReader();
+            uint num = reader.UnconsumedBufferLength;
+            string str = reader.ReadString(num);
+
+            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+            await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => lstBox.Items.Add(str));
+            //lstBox.Items.Add(str);
         }
     }
 }
