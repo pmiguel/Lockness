@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocknessClient.Windows", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocknessClient.WindowsPhone", "LocknessClient\LocknessClient.WindowsPhone\LocknessClient.WindowsPhone.csproj", "{E1BC5B48-F906-4D4D-BE00-5AB7FE7FF6B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscoveryClientTest", "DiscoveryClientTest\DiscoveryClientTest.csproj", "{B954CF04-5552-4DA2-85D0-A8319926B5A9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		LockNessClient\LockNessClient.Shared\LockNessClient.Shared.projitems*{710d210c-32e4-4af2-9f42-a88c2449ea92}*SharedItemsImports = 13
@@ -96,6 +98,16 @@ Global
 		{E1BC5B48-F906-4D4D-BE00-5AB7FE7FF6B1}.Release|x86.ActiveCfg = Release|x86
 		{E1BC5B48-F906-4D4D-BE00-5AB7FE7FF6B1}.Release|x86.Build.0 = Release|x86
 		{E1BC5B48-F906-4D4D-BE00-5AB7FE7FF6B1}.Release|x86.Deploy.0 = Release|x86
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Release|x64.ActiveCfg = Release|Any CPU
+		{B954CF04-5552-4DA2-85D0-A8319926B5A9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

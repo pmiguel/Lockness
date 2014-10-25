@@ -30,6 +30,7 @@ namespace LocknessClient
             writer.WriteString(message);
  
             await writer.StoreAsync();
+
         }
     }
 }

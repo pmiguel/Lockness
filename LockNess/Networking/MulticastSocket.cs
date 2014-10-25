@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LockNess.Comm
+namespace LockNess.Networking
 {
     public class MulticastSocket
     {
@@ -29,29 +29,31 @@ namespace LockNess.Comm
 
         public MulticastSocket(
             string MulticastAddress, int MulticastPort, int LocalPort, 
-            int TimeToLive, bool ReuseAddress, bool Loopback, int bufferSize)
+            int TimeToLive, bool ReuseAddress, bool Loopback, int bufferSize, int timeout)
         {
             if(MulticastPort < 0 || MulticastPort > 65535 || LocalPort < 0 || LocalPort > 65535)
                 throw new Exception("Port range out of bounds.");
 
             mMulticastEP = new IPEndPoint(IPAddress.Parse(MulticastAddress), MulticastPort);
             LocalEndpoint = new IPEndPoint(IPAddress.Any, LocalPort);
-            InitSocket(ReuseAddress, Loopback, TimeToLive);
+            InitSocket(ReuseAddress, Loopback, TimeToLive, timeout);
             RecvBuffer = new byte[bufferSize];
         }
 
         public MulticastSocket(string MulticastAddress, int MulticastPort, int TimeToLive) 
-            : this(MulticastAddress, MulticastPort, 0, TimeToLive, true, true, 1024)
+            : this(MulticastAddress, MulticastPort, 0, TimeToLive, true, true, 1024, 5)
         {
 
         }
 
-        private void InitSocket(bool reuseAddr, bool loopback, int ttl)
+        private void InitSocket(bool reuseAddr, bool loopback, int ttl, int timeout)
         {
             mSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             mSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, reuseAddr);
             mSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, ttl);
             mSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastLoopback, loopback);
+            mSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, timeout * 1000);
+            mSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.SendTimeout, timeout * 1000); 
             mSocket.Bind(LocalEndpoint as EndPoint);
 
             mSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
@@ -64,15 +66,16 @@ namespace LockNess.Comm
             return sentBytes;
         }
 
-        public byte[] Receive()
+        public byte[] Receive(ref EndPoint ep)
         {
-            EndPoint ep = mMulticastEP as EndPoint;
             int recv = mSocket.ReceiveFrom(RecvBuffer, ref ep);
             return RecvBuffer;
         }
 
         public void Close()
         {
+            mSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership,
+                new MulticastOption(mMulticastEP.Address));
             mSocket.Close();
         }
     }

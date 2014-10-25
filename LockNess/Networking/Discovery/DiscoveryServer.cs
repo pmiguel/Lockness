@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace LockNess.Comm
+namespace LockNess.Networking.Discovery
 {
-    public class ServiceDiscovery
+    public class DiscoveryServer
     {
         private MulticastSocket socket;
         private string multicastAddress;
@@ -21,9 +21,7 @@ namespace LockNess.Comm
 
         public string Message;
 
-        public bool IsServer { get; }
-
-        public ServiceDiscovery(string multicast, int port, string message, int frequency, bool IsServer)
+        public DiscoveryServer(string multicast, int port, string message, int frequency)
         {
             this.multicastAddress = multicast;
             this.multicastPort = port;
@@ -34,32 +32,28 @@ namespace LockNess.Comm
             timer = new Timer();
             socket = new MulticastSocket(multicast, port, 4);
         }
+
         public void StartAnnounce()
         {
-            if(IsServer)
-            {
-                this.IsRunning = true;
-                timer.Elapsed += SendAnnounce; // Send callback
-                timer.Interval = this.frequency * 1000; // seconds to millisseconds
-                timer.Enabled = IsRunning;
-            }
+            this.IsRunning = true;
+            timer.Elapsed += SendAnnounce; // Send callback
+            timer.Interval = this.frequency * 1000; // seconds to millisseconds
+            timer.Start();
             // TODO else throw exception
         }
 
         public void StopAnnounce()
         {
-            if(IsServer && IsRunning)
-            {
-                this.IsRunning = false;
-                timer.Enabled = IsRunning;
-                socket.Close();
-            }
+            this.IsRunning = false;
+            timer.Stop();
+            socket.Close();
             // TODO else throw exception
         }
 
         private void SendAnnounce(object sender, ElapsedEventArgs e)
         {
             socket.Send(Encoding.UTF8.GetBytes(Message));
+            Console.WriteLine("Sent message: " + Message);
         }
     }
 }

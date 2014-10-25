@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C59F340-AEB5-487A-93C7-6F3E64124643}</ProjectGuid>
+    <ProjectGuid>{B954CF04-5552-4DA2-85D0-A8319926B5A9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LockNess</RootNamespace>
-    <AssemblyName>LockNessServer</AssemblyName>
+    <RootNamespace>DiscoveryClientTest</RootNamespace>
+    <AssemblyName>DiscoveryClientTest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,20 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Networking\Discovery\DiscoveryClient.cs" />
-    <Compile Include="Networking\MessageReceiver.cs" />
-    <Compile Include="Networking\MulticastSocket.cs" />
-    <Compile Include="Networking\Discovery\DiscoveryServer.cs" />
-    <Compile Include="Invoker\Commands\ICommand.cs" />
-    <Compile Include="Invoker\Commands\LockCmd.cs" />
-    <Compile Include="Invoker\Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\LockNess\LockNessServer.csproj">
+      <Project>{9c59f340-aeb5-487a-93c7-6f3e64124643}</Project>
+      <Name>LockNessServer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LockNess.Comm
+namespace LockNess.Networking
 {
     public class MessageReceiver
     {
