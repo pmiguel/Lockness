@@ -1,4 +1,5 @@
-﻿using LocknessClient.Networking.Discovery;
+﻿using LocknessClient.Networking;
+using LocknessClient.Networking.Discovery;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
