@@ -15,11 +15,13 @@ namespace LockNess
         static List<IPEndPoint> eps;
         static void Main(string[] args)
         {
-            DiscoveryServer ds = new DiscoveryServer("239.0.0.2", 7135, "locknessService", 2);
+            int Port = 7130;
+
+            DiscoveryServer ds = new DiscoveryServer("239.0.0.2", 7135, "locknessService-Port:"+Port, 2);
             ds.StartAnnounce();
 
             Parser p = new Parser();
-            MessageReceiver mr = new MessageReceiver(ref p, 7130);
+            MessageReceiver mr = new MessageReceiver(ref p, Port);
             mr.Start();
 
             Console.ReadKey();

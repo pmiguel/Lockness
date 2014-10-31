@@ -7,28 +7,47 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        
+    </Page.Resources>
     <Grid x:Name="RootLayout">
         <Pivot Title="Lockness">
             <PivotItem Header="Client">
                 <StackPanel x:Name="TitlePanel" Grid.Row="0">
                     <TextBlock Text="Host: "></TextBlock>
-                    <TextBox x:Name="HostBox" Margin="10"></TextBox>
+                    <TextBox Text="{Binding Selected.Host, Mode=TwoWay}" x:Name="HostBox" Margin="10"></TextBox>
                     <TextBlock Text="Port: "></TextBlock>
-                    <TextBox x:Name="PortBox" Margin="10" Width="120" InputScope="Number" HorizontalAlignment="Left"></TextBox>
+                    <TextBox Text="{Binding Selected.Message, Mode=TwoWay}" x:Name="PortBox" Margin="10" Width="120" InputScope="Number" HorizontalAlignment="Left"></TextBox>
                     <Button Margin="10" Click="Button_Click">Lock</Button>
                 </StackPanel>
             </PivotItem>
             <PivotItem Header="Discovery">
                 <StackPanel Orientation="Vertical">
-                    <ListBox x:Name="lstBox" Height="425" ItemsSource="{Binding Hosts}">
-                        <ListBox.ItemTemplate>
+                    <ListView x:Name="lstBox" Height="425" 
+                              ItemsSource="{Binding Hosts}" 
+                              SelectedItem="{Binding Selected, Mode=TwoWay}" 
+                              SelectionMode="Single">
+                        <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding}"></TextBlock>
+                                <StackPanel Margin="0,0,0,9.5">
+                                    <TextBlock
+                                    Text="{Binding}"
+                                    TextWrapping="Wrap"
+                                    Pivot.SlideInAnimationGroup="1"
+                                    CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                    Margin="0,0,19,0"/>
+                                    <TextBlock
+                                    Text="{Binding Path=Message}"
+                                    TextWrapping="WrapWholeWords"
+                                    Pivot.SlideInAnimationGroup="2" 
+                                    CommonNavigationTransitionInfo.IsStaggerElement="True" 
+                                    Style="{ThemeResource ListViewItemContentTextBlockStyle}"
+                                    Margin="0,0,19,0"/>
                                 </StackPanel>
                             </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackPanel>
             </PivotItem>
         </Pivot>
