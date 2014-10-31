@@ -16,6 +16,8 @@ using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel.Core;
+using LocknessClient.Networking.Discovery;
+using System.Collections.ObjectModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,15 +28,13 @@ namespace LocknessClient
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        OldNetworkInterface nic;
-        DatagramSocket socket;
+        MainPageViewModel viewmodel;
         public MainPage()
         {
             this.InitializeComponent();
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
-            nic = new OldNetworkInterface();
-            socket =  new DatagramSocket();
+            
         }
 
         /// <summary>
@@ -44,40 +44,13 @@ namespace LocknessClient
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: Prepare page for display here.
-
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
+            viewmodel = new MainPageViewModel();
+            this.DataContext = viewmodel;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            HostName host = new HostName(this.HostBox.Text);
-            nic.Connect(host, this.PortBox.Text);
-            nic.SendMessage("lock");
-        }
-
-        private async void btnDiscover_Click(object sender, RoutedEventArgs e)
-        {
-            HostName host = new HostName(this.HostBox.Text);
-            //await socket.ConnectAsync(host, this.PortBox.Text);
-            socket.MessageReceived += socket_MessageReceived;
-            await socket.BindServiceNameAsync("7135");
-            socket.JoinMulticastGroup(host);            
-        }
-
-        async void socket_MessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
-        {
-            DataReader reader = args.GetDataReader();
-            uint num = reader.UnconsumedBufferLength;
-            string str = reader.ReadString(num);
-
-            var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-            await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => lstBox.Items.Add(str));
-            //lstBox.Items.Add(str);
+            await viewmodel.SendLock();
         }
     }
 }

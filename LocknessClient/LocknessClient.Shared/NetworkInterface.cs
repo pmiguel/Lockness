@@ -13,36 +13,29 @@ namespace LocknessClient
     {
         private DatagramSocket mSocket;
         private ConcurrentQueue<string> messageQueue;
+        private Action receiveAction;
 
         public NetworkInterface()
         {
             mSocket = new DatagramSocket();
-            messageQueue = new ConcurrentQueue<string>();
         }
 
         public async void Connect(HostName host, string port, bool joinMulticast = false)
         {
-            await mSocket.ConnectAsync(host, port);
             mSocket.MessageReceived += this.ReceiveInternal;
             if (joinMulticast)
+            {
                 mSocket.JoinMulticastGroup(host);
+                await mSocket.BindServiceNameAsync("7135");
+            }
+            else
+                await mSocket.ConnectAsync(host, port);
         }
 
         private void ReceiveInternal(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
         {
-            DataReader reader = args.GetDataReader();
-            uint unconsumed = reader.UnconsumedBufferLength;
-            messageQueue.Enqueue(reader.ReadString(unconsumed));
-        }
-
-        public string PollReceive()
-        {
-            string output = "";
-            if(messageQueue.TryDequeue(out output))
-            {
-                return output;
-            }
-            return null;
+            if (receiveAction != null)
+                receiveAction.BeginInvoke(null, args);
         }
 
         public async void Send(string message)
@@ -52,11 +45,9 @@ namespace LocknessClient
             await writer.StoreAsync();
         }
 
-        public bool HasMessages()
+        public void Receive(Action action)
         {
-            if (messageQueue.IsEmpty)
-                return false;
-            return true;
+            this.receiveAction = action;
         }
     }
 }

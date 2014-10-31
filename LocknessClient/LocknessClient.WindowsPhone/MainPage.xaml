@@ -20,8 +20,15 @@
             </PivotItem>
             <PivotItem Header="Discovery">
                 <StackPanel Orientation="Vertical">
-                    <ListBox x:Name="lstBox" Height="425"></ListBox>
-                    <Button x:Name="btnDiscover" Click="btnDiscover_Click">Discover</Button>
+                    <ListBox x:Name="lstBox" Height="425" ItemsSource="{Binding Hosts}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </StackPanel>
             </PivotItem>
         </Pivot>

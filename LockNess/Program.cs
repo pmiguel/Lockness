@@ -15,19 +15,15 @@ namespace LockNess
         static List<IPEndPoint> eps;
         static void Main(string[] args)
         {
-            //Parser p = new Parser();
-            //MessageReceiver mr = new MessageReceiver(ref p);
-            //mr.Start();
-            DiscoveryClient dc = new DiscoveryClient("239.0.0.2", 7135, "locknessService", 5);
-            try
-            {
-                eps = dc.FindServices();
+            DiscoveryServer ds = new DiscoveryServer("239.0.0.2", 7135, "locknessService", 2);
+            ds.StartAnnounce();
 
-            } catch(Exception ex)
-            {
-                Console.WriteLine("No hosts");
-            }
+            Parser p = new Parser();
+            MessageReceiver mr = new MessageReceiver(ref p, 7130);
+            mr.Start();
+
             Console.ReadKey();
+            ds.StopAnnounce();
         }
     }
 }

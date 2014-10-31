@@ -53,7 +53,7 @@ namespace LockNess.Networking.Discovery
         private void SendAnnounce(object sender, ElapsedEventArgs e)
         {
             socket.Send(Encoding.UTF8.GetBytes(Message));
-            Console.WriteLine("Sent message: " + Message);
+            Console.WriteLine("Multicast Msg: " + Message + " to --> " + multicastAddress + ":" + multicastPort);
         }
     }
 }
